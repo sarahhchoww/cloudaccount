@@ -6,34 +6,79 @@
   <title>Cloud Access</title>
 
   <style>
+    :root {
+      --max-width: 420px;
+      --page-padding: 16px;
+      --topbar-height: 56px;
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background: linear-gradient(135deg, #0f172a, #1e293b);
       color: white;
       min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      -webkit-font-smoothing:antialiased;
     }
 
+    /* Top menu bar */
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--topbar-height);
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      background: rgba(2,6,23,0.45);
+      backdrop-filter: blur(6px);
+      z-index: 1000;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.03) inset;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      color: #e6eef8;
+    }
+
+    .logo svg {
+      width: 28px;
+      height: 28px;
+      display: block;
+      flex: 0 0 28px;
+    }
+
+    .brand {
+      font-size: 16px;
+      letter-spacing: 0.2px;
+    }
+
+    /* Page wrapper - mobile-first */
     .page {
-      width: 90%;
-      max-width: 420px;
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: calc(var(--topbar-height) + var(--page-padding)) var(--page-padding) var(--page-padding);
+      box-sizing: border-box;
       text-align: center;
     }
 
     .box {
-      background: rgba(255, 255, 255, 0.08);
-      padding: 30px;
-      border-radius: 18px;
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+      background: rgba(255, 255, 255, 0.06);
+      padding: 20px;
+      border-radius: 14px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+      text-align: left;
     }
 
     input {
       width: 100%;
       padding: 14px;
-      margin-top: 15px;
+      margin-top: 12px;
       border: none;
       border-radius: 10px;
       font-size: 16px;
@@ -43,7 +88,7 @@
     button {
       width: 100%;
       padding: 14px;
-      margin-top: 15px;
+      margin-top: 12px;
       border: none;
       border-radius: 10px;
       background: #38bdf8;
@@ -59,7 +104,7 @@
 
     .error {
       color: #f87171;
-      margin-top: 12px;
+      margin-top: 10px;
       display: none;
     }
 
@@ -67,21 +112,43 @@
       display: none;
     }
 
+    /* Image on the cloud page should not be inside a box/container */
     .photo {
       width: 100%;
-      border-radius: 14px;
-      margin-top: 20px;
+      height: auto;
+      border-radius: 6px;
+      margin: 8px 0 0 0;
+      display: block;
+      object-fit: cover;
     }
 
     .caption {
-      margin-top: 12px;
+      margin-top: 10px;
       font-size: 15px;
       color: #cbd5e1;
+      text-align: left;
+    }
+
+    /* Smaller screens tweaks */
+    @media (max-width: 420px) {
+      .box { padding: 16px; border-radius: 12px; }
+      .brand { display: none; }
     }
   </style>
 </head>
 
 <body>
+
+  <!-- Top menu bar with cloud logo -->
+  <header class="topbar">
+    <div class="logo">
+      <!-- Simple inline cloud SVG -->
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M20 17.58A4.42 4.42 0 0 0 15.58 13H15a5 5 0 0 0-9.9 1A3.5 3.5 0 0 0 3.5 18.5H20z" fill="#e6eef8"/>
+      </svg>
+      <span class="brand">Cloud</span>
+    </div>
+  </header>
 
   <!-- Landing Page -->
   <div id="loginPage" class="page">
@@ -98,19 +165,17 @@
 
   <!-- Cloud Page -->
   <div id="cloudPage" class="page">
+    <!-- Keep the heading in a subtle box but remove the image from that container -->
     <div class="box">
       <h1>雲端檔案</h1>
+    </div>
 
-      <img 
-        src="image/stealingcat.png" 
-        alt="Cloud evidence photo" 
-        class="photo"
-      />
+    <!-- Image is intentionally not inside the .box container so it appears without the boxed frame -->
+    <img src="image/stealingcat.png" alt="Cloud evidence photo" class="photo" />
 
-      <div class="caption">
-        檔案上傳於2098年9月21日，晚上10:47。
-        希望件事唔係我諗嘅咁啦。。。
-      </div>
+    <div class="caption">
+      檔案上傳於2098年9月21日，晚上10:47。
+      希望件事唔係我諗嘅咁啦。。。
     </div>
   </div>
 
@@ -124,6 +189,7 @@
       if (input === correctPassword) {
         document.getElementById("loginPage").style.display = "none";
         document.getElementById("cloudPage").style.display = "block";
+        window.scrollTo({top:0,behavior:'smooth'});
       } else {
         error.style.display = "block";
       }
