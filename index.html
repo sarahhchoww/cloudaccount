@@ -86,6 +86,36 @@
       text-align: left;
     }
 
+    .password-row {
+      position: relative;
+      margin-top: 12px;
+    }
+
+    .password-row input {
+      width: 100%;
+      padding-right: 46px;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: auto;
+      border: none;
+      background: transparent;
+      padding: 6px;
+      cursor: pointer;
+      color: #0f1a4a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .password-toggle:hover {
+      color: #152a70;
+    }
+
     input {
       width: 100%;
       padding: 14px;
@@ -175,7 +205,14 @@
       <h1>你好，鄭凱峯</h1>
       <p>輸入密碼以存取雲端儲存中的受保護檔案。</p>
 
-      <input type="password" id="passwordInput" placeholder="密碼" />
+      <div class="password-row">
+        <input type="password" id="passwordInput" placeholder="密碼" />
+        <button type="button" id="togglePassword" class="password-toggle" aria-label="Show password" onclick="togglePasswordVisibility()">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 5c-4.97 0-9 4-9 7s4.03 7 9 7c4.97 0 9-4 9-7s-4.03-7-9-7Zm0 12.2c-2.92 0-5.22-2.3-5.22-5.2C6.78 9.1 9.08 6.8 12 6.8c2.92 0 5.22 2.3 5.22 5.2 0 2.9-2.3 5.2-5.22 5.2Zm0-8c-1.52 0-2.78 1.27-2.78 2.8 0 1.54 1.26 2.8 2.78 2.8 1.52 0 2.78-1.26 2.78-2.8 0-1.53-1.26-2.8-2.78-2.8Z" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
       <button onclick="checkPassword()">登入</button>
 
       <div id="errorMessage" class="error">密碼錯誤</div>
@@ -198,6 +235,34 @@
 
   <script>
     const correctPassword = "1234";
+    let revealTimeout;
+    const eyeOpenIcon = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 12S5 5 12 5s11 7 11 7-4 7-11 7S1 12 1 12Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    const eyeClosedIcon = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 12S5 5 12 5s11 7 11 7-4 7-11 7S1 12 1 12Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.5 8.5l7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 9.75a2.25 2.25 0 0 0 0 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+    function setPasswordIcon(isVisible) {
+      const toggleButton = document.getElementById('togglePassword');
+      toggleButton.innerHTML = isVisible ? eyeOpenIcon : eyeClosedIcon;
+      toggleButton.setAttribute('aria-label', isVisible ? 'Hide password' : 'Show password');
+    }
+
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById('passwordInput');
+      const isHidden = passwordInput.type === 'password';
+
+      if (isHidden) {
+        passwordInput.type = 'text';
+        setPasswordIcon(true);
+        clearTimeout(revealTimeout);
+        revealTimeout = setTimeout(() => {
+          passwordInput.type = 'password';
+          setPasswordIcon(false);
+        }, 3000);
+      } else {
+        passwordInput.type = 'password';
+        setPasswordIcon(false);
+        clearTimeout(revealTimeout);
+      }
+    }
 
     function checkPassword() {
       const input = document.getElementById("passwordInput").value;
