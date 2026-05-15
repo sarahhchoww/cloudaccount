@@ -15,8 +15,8 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #0f172a, #1e293b);
-      color: white;
+      background: #ffffff;
+      color: #0f1a4a;
       min-height: 100vh;
       -webkit-font-smoothing:antialiased;
     }
@@ -31,10 +31,10 @@
       display: flex;
       align-items: center;
       padding: 0 14px;
-      background: rgba(2,6,23,0.45);
+      background: rgba(255,255,255,0.95);
       backdrop-filter: blur(6px);
       z-index: 1000;
-      box-shadow: 0 1px 0 rgba(255,255,255,0.03) inset;
+      box-shadow: 0 1px 0 rgba(15,26,74,0.08) inset;
     }
 
     .logo {
@@ -42,7 +42,7 @@
       align-items: center;
       gap: 10px;
       font-weight: 700;
-      color: #e6eef8;
+      color: #0f1a4a;
     }
 
     .logo svg {
@@ -79,7 +79,7 @@
     }
 
     .box {
-      background: rgba(255, 255, 255, 0.06);
+      background: #f5f8ff;
       padding: 20px;
       border-radius: 14px;
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
@@ -102,15 +102,15 @@
       margin-top: 12px;
       border: none;
       border-radius: 10px;
-      background: #38bdf8;
-      color: #020617;
+      background: #0f1a4a;
+      color: #ffffff;
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
     }
 
     button:hover {
-      background: #7dd3fc;
+      background: #152a70;
     }
 
     .error {
@@ -136,11 +136,18 @@
     .caption {
       margin-top: 10px;
       font-size: 15px;
-      color: #cbd5e1;
+      color: #3b4f8a;
       text-align: left;
     }
 
-    /* Standalone title for cloud page (no box) */
+    .page-title {
+      margin: 0 0 8px 0;
+      font-size: 28px;
+      font-weight: 700;
+      text-align: left;
+      color: #0f1a4a;
+    }
+
     /* Smaller screens tweaks */
     @media (max-width: 420px) {
       .box { padding: 16px; border-radius: 12px; }
@@ -178,7 +185,7 @@
   <!-- Cloud Page -->
   <div id="cloudPage" class="page">
     <!-- Heading without the boxed container -->
-    <h1>雲端檔案</h1>
+    <h1 class="page-title">雲端檔案</h1>
 
     <!-- Image is intentionally not inside a boxed frame so it appears without the boxed frame -->
     <img src="image/stealingcat.png" alt="Cloud evidence photo" class="photo" />
