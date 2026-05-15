@@ -206,11 +206,9 @@
       <p>輸入密碼以存取雲端儲存中的受保護檔案。</p>
 
       <div class="password-row">
-        <input type="password" id="passwordInput" placeholder="密碼" />
+        <input type="password" id="passwordInput" placeholder="密碼" onblur="handlePasswordBlur()" />
         <button type="button" id="togglePassword" class="password-toggle" aria-label="Show password" onclick="togglePasswordVisibility()">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 5c-4.97 0-9 4-9 7s4.03 7 9 7c4.97 0 9-4 9-7s-4.03-7-9-7Zm0 12.2c-2.92 0-5.22-2.3-5.22-5.2C6.78 9.1 9.08 6.8 12 6.8c2.92 0 5.22 2.3 5.22 5.2 0 2.9-2.3 5.2-5.22 5.2Zm0-8c-1.52 0-2.78 1.27-2.78 2.8 0 1.54 1.26 2.8 2.78 2.8 1.52 0 2.78-1.26 2.78-2.8 0-1.53-1.26-2.8-2.78-2.8Z" fill="currentColor"/>
-          </svg>
+          <img id="passwordIcon" src="image/eye.png" alt="Show password" width="20" height="20" />
         </button>
       </div>
       <button onclick="checkPassword()">登入</button>
@@ -236,12 +234,12 @@
   <script>
     const correctPassword = "1234";
     let revealTimeout;
-    const eyeOpenIcon = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 12S5 5 12 5s11 7 11 7-4 7-11 7S1 12 1 12Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-    const eyeClosedIcon = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 12S5 5 12 5s11 7 11 7-4 7-11 7S1 12 1 12Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.5 8.5l7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 9.75a2.25 2.25 0 0 0 0 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
     function setPasswordIcon(isVisible) {
       const toggleButton = document.getElementById('togglePassword');
-      toggleButton.innerHTML = isVisible ? eyeOpenIcon : eyeClosedIcon;
+      const icon = document.getElementById('passwordIcon');
+      icon.src = isVisible ? 'image/eye-off.png' : 'image/eye.png';
+      icon.alt = isVisible ? 'Hide password' : 'Show password';
       toggleButton.setAttribute('aria-label', isVisible ? 'Hide password' : 'Show password');
     }
 
@@ -258,6 +256,15 @@
           setPasswordIcon(false);
         }, 3000);
       } else {
+        passwordInput.type = 'password';
+        setPasswordIcon(false);
+        clearTimeout(revealTimeout);
+      }
+    }
+
+    function handlePasswordBlur() {
+      const passwordInput = document.getElementById('passwordInput');
+      if (passwordInput.type === 'text') {
         passwordInput.type = 'password';
         setPasswordIcon(false);
         clearTimeout(revealTimeout);
