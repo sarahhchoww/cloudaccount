@@ -140,6 +140,15 @@
       text-align: left;
     }
 
+    /* Standalone title for cloud page (no box) */
+    .page-title {
+      margin: 0 0 8px 0;
+      font-size: 20px;
+      font-weight: 700;
+      text-align: left;
+      color: #e6eef8;
+    }
+
     /* Smaller screens tweaks */
     @media (max-width: 420px) {
       .box { padding: 16px; border-radius: 12px; }
@@ -176,12 +185,10 @@
 
   <!-- Cloud Page -->
   <div id="cloudPage" class="page">
-    <!-- Keep the heading in a subtle box but remove the image from that container -->
-    <div class="box">
-      <h1>雲端檔案</h1>
-    </div>
+    <!-- Heading without the boxed container -->
+    <h1 class="page-title">雲端檔案</h1>
 
-    <!-- Image is intentionally not inside the .box container so it appears without the boxed frame -->
+    <!-- Image is intentionally not inside a boxed frame so it appears without the boxed frame -->
     <img src="image/stealingcat.png" alt="Cloud evidence photo" class="photo" />
 
     <div class="caption">
